@@ -1,7 +1,10 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TimetableGrid from './TimetableGrid';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import './timetable.css';
+import Layout from '../Layout/Layout';
 
 const TimetableCheck = () => {
     const location = useLocation();
@@ -16,58 +19,45 @@ const TimetableCheck = () => {
         navigate('/timetable');
     };
 
+    const handleSaveAsPDF = async () => {
+        const element = document.querySelector('.timetable-container');
+        if (!element) return;
+
+        try {
+            const canvas = await html2canvas(element);
+            const imgData = canvas.toDataURL('image/png');
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pageWidth = pdf.internal.pageSize.getWidth();
+            const pageHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = pageWidth;
+            const imgHeight = (canvas.height * pageWidth) / canvas.width;
+
+            pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+            pdf.save('timetable.pdf');
+        } catch (error) {
+            console.error('PDF 저장 중 오류 발생:', error);
+        }
+    };
+
     return (
-        <div className="min-h-screen">
-            <header className="header">
-                <div className="header-container">
-                    <div className="logo-section">
-                        <img src="/logo2.png" alt="계명대학교 로고" className="logo" />
-                        <div className="logo-text">
-                            <div className="university-name-ko">계명대학교</div>
-                            <div className="university-name-en">KEIMYUNG UNIVERSITY</div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            
+        <Layout>
             <main className="main-content">
                 <div className="tables-wrapper">
                     <div className="timetable-container">
-                        <h2 style={{ 
-                            fontSize: '1rem',
-                            marginBottom: '15px',
-                            color: '#333'
-                        }}>선택된 시간표</h2>
+                        <h2 className="timetable-title">선택된 시간표</h2>
                         <TimetableGrid scheduleData={selectedTimetable} />
-                        <div className="button-container" style={{ 
-                            display: 'flex', 
-                            gap: '8px',
-                            marginTop: '15px'
-                        }}>
+                        
+                        {/* ✅ 기존 인라인 스타일 제거 & CSS 클래스 적용 */}
+                        <div className="timetable-button-container">
                             <button 
-                                className="select-button" 
+                                className="timetable-button" 
                                 onClick={handleBack}
-                                style={{
-                                    flex: 1,
-                                    maxWidth: '150px',
-                                    fontSize: '0.6rem',
-                                    padding: '6px 0',
-                                    height: '28px',
-                                    lineHeight: '1'
-                                }}
                             >
                                 시간표 다시 선택하기
                             </button>
                             <button 
-                                className="select-button"
-                                style={{
-                                    flex: 1,
-                                    maxWidth: '150px',
-                                    fontSize: '0.6rem',
-                                    padding: '6px 0',
-                                    height: '28px',
-                                    lineHeight: '1'
-                                }}
+                                className="timetable-button"
+                                onClick={handleSaveAsPDF}
                             >
                                 PDF로 저장하기
                             </button>
@@ -75,7 +65,7 @@ const TimetableCheck = () => {
                     </div>
                 </div>
             </main>
-        </div>
+        </Layout>
     );
 };
 

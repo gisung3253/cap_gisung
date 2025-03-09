@@ -59,7 +59,7 @@ function Main() {
             </div>
           </div>
           <nav className="nav-buttons">
-            <button className="nav-button">로그인</button>
+            <button className="nav-button">로그아웃</button>
             <button className="nav-button">프로필 수정</button>
             <button className="nav-button">설명</button>
             <button className="nav-button">문의하기</button>
