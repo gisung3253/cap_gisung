@@ -62,7 +62,7 @@ function Main() {
             <button className="nav-button">로그아웃</button>
             <button className="nav-button">프로필 수정</button>
             <button className="nav-button">설명</button>
-            <button className="nav-button">문의하기</button>
+            <button className="nav-button" onClick={() => navigate("/inquiryForm")}>문의하기</button>
           </nav>
         </div>
       </header>
