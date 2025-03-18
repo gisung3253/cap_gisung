@@ -33,6 +33,10 @@ const TimetableCheck = () => {
             const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/master
             pdf.save('timetable.pdf');
         } catch (error) {
             console.error('PDF 저장 중 오류 발생:', error);
@@ -56,8 +60,21 @@ const TimetableCheck = () => {
                                 시간표 다시 선택하기
                             </button>
                             <button 
+<<<<<<< HEAD
                                 className="timetable-button"
                                 onClick={handleSaveAsPDF}
+=======
+                                className="select-button"
+                                onClick={handleSaveAsPDF}
+                                style={{
+                                    flex: 1,
+                                    maxWidth: '150px',
+                                    fontSize: '0.6rem',
+                                    padding: '6px 0',
+                                    height: '28px',
+                                    lineHeight: '1'
+                                }}
+>>>>>>> upstream/master
                             >
                                 PDF로 저장하기
                             </button>
@@ -70,3 +87,4 @@ const TimetableCheck = () => {
 };
 
 export default TimetableCheck;
+

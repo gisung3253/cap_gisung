@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: #3f51b5;
-  background-color: #242424;
+  background-color: #3f51b5;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -39,6 +39,12 @@ h1 {
   line-height: 1.1;
 }
 
+<<<<<<< HEAD
+=======
+/*버튼 함수 삭제*/
+
+
+>>>>>>> upstream/master
 @font-face {
   font-family: "Moneygraphy-Rounded";
   src: url(./font/Moneygraphy-Rounded.ttf) format("truetype");

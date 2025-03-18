@@ -23,15 +23,13 @@
     align-items: flex-end;
 }
 
+/*logo section 고정*/
 .logo-section {
     display: flex;
     align-items: center;
     gap: 0.75rem;
 }
 
-.logo {
-    height: 45px;
-}
 
 .logo-text {
     display: flex;
