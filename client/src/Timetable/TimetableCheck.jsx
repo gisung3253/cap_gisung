@@ -33,7 +33,6 @@ const TimetableCheck = () => {
             const imgHeight = (canvas.height * pageWidth) / canvas.width;
 
             pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-
             pdf.save('timetable.pdf');
         } catch (error) {
             console.error('PDF 저장 중 오류 발생:', error);
@@ -42,45 +41,26 @@ const TimetableCheck = () => {
 
     return (
         <Layout>
-            <main className="main-content">
+            <main className="timetable-content">
                 <div className="tables-wrapper">
                     <div className="timetable-container">
-                        <h2 style={{ 
-                            fontSize: '1rem',
-                            marginBottom: '15px',
-                            color: '#333'
-                        }}>선택된 시간표</h2>
-                        <TimetableGrid scheduleData={selectedTimetable} />
-                        <div className="button-container" style={{ 
-                            display: 'flex', 
-                            gap: '8px',
-                            marginTop: '15px'
-                        }}>
+                        <h2 className="timetable-title">선택된 시간표</h2>
+                        <TimetableGrid 
+                            scheduleData={selectedTimetable}
+                            isReadOnly={true} // 클릭 막기    
+                        />
+                        
+                        {/* ✅ 기존 인라인 스타일 제거 & CSS 클래스 적용 */}
+                        <div className="timetable-button-container">
                             <button 
-                                className="select-button" 
+                                className="timetable-button" 
                                 onClick={handleBack}
-                                style={{
-                                    flex: 1,
-                                    maxWidth: '150px',
-                                    fontSize: '0.6rem',
-                                    padding: '6px 0',
-                                    height: '28px',
-                                    lineHeight: '1'
-                                }}
                             >
                                 시간표 다시 선택하기
                             </button>
                             <button 
-                                className="select-button"
+                                className="timetable-button"
                                 onClick={handleSaveAsPDF}
-                                style={{
-                                    flex: 1,
-                                    maxWidth: '150px',
-                                    fontSize: '0.6rem',
-                                    padding: '6px 0',
-                                    height: '28px',
-                                    lineHeight: '1'
-                                }}
                             >
                                 PDF로 저장하기
                             </button>
