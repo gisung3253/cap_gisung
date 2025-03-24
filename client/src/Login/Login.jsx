@@ -6,7 +6,7 @@ import Layout from "../Layout/Layout";
 export default function Login() {
   return (
     <Layout>
-      <main className="main-content">
+      <div className="main-con">
         <div className="title-section">
           <h1 className="main-title">계명대학교 시간표 도우미</h1>
         </div>
@@ -25,7 +25,7 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </main>
+      </div>
     </Layout>
   );
 }
