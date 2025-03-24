@@ -1,26 +1,48 @@
 import React, { useState } from "react";
-import Modal from "react-modal"; // react-modal 임포트
-import "./Main.css"; // 스타일 파일 임포트
+import Modal from "react-modal";
+import "./Main.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./MainMedia.css";
 import "../Faq/Faq";
 
-Modal.setAppElement("#root"); // 모달을 사용할 루트 엘리먼트 지정
+Modal.setAppElement("#root"); // 모달을 사용할 루트
 
 function Main() {
   const [year, setYear] = useState("1학년");
   const [semester, setSemester] = useState("1학기");
+  const [college, setCollege] = useState("공과대학");
   const [department, setDepartment] = useState("컴퓨터공학과");
-  const [majorrequired, setMajorrequired] = useState(0); // 초기값을 숫자로 설정
-  const [generalCredit, setGeneralCredit] = useState(0); // 초기값을 숫자로 설정
-  const [cyberCredit, setCyberCredit] = useState(0); // 초기값을 숫자로 설정
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // 메뉴 상태 추가
+  const [isDepartmentModalOpen, setIsDepartmentModalOpen] = useState(false);
+  const [majorrequired, setMajorrequired] = useState(0); 
+  const [generalCredit, setGeneralCredit] = useState(0); 
+  const [cyberCredit, setCyberCredit] = useState(0); 
+  const [isModalOpen, setIsModalOpen] = useState(false); // 학점 모달 상태 추가
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // 학과 목록
+  const departments = {
+    "공과대학": ["컴퓨터공학과", "전자공학과", "기계공학과","건축학과","건축공학과","게임소프트웨어학과","교통공학과","도시계획학과","로봇공학과","생태조경학과","산업공학과","신소재공학과","의용공학과","전기에너지공학과","전자공학과","토목공학과","화학공학과","환경공학과과"],
+    "인문대학": ["국어국문학과", "영어영문학과", "철학과"],
+    "경상대학": ["경영학과", "경제학과", "회계학과"]
+  };
 
   const handleYearChange = (event) => setYear(event.target.value);
   const handleSemesterChange = (event) => setSemester(event.target.value);
-  const handleDepartmentChange = (event) => setDepartment(event.target.value);
+
+  // 단과대학 선택 시 학과
+  const handleCollegeChange = (event) => {
+    setCollege(event.target.value);
+    setDepartment(departments[event.target.value][0]); // 선택한 단과대학에 해당하는 첫 번째 학과로 초기화
+  };
+
+  const handleDepartmentChange = (dept) => {
+    setDepartment(dept);
+    setIsDepartmentModalOpen(false); // 학과 모달 닫기
+  };
+
+  const openDepartmentModal = () => setIsDepartmentModalOpen(true); // 학과 모달 열기
+  const closeDepartmentModal = () => setIsDepartmentModalOpen(false); // 학과 모달 닫기
 
   // 전공학점, 교양학점 변경 핸들러
   const handleMajorrequiredChange = (credit) => setMajorrequired(credit);
@@ -117,16 +139,51 @@ function Main() {
             </div>
 
             <div className="form-group">
-              <label className="form-label">학과</label>
-              <select value={department} onChange={handleDepartmentChange}>
-                <option>컴퓨터공학과</option>
-                <option>도시계획학과</option>
-                <option>게임소프트웨어학과</option>
+              <label className="form-label">단과대학</label>
+              <select value={college} onChange={handleCollegeChange}>
+                <option>공과대학</option>
+                <option>인문대학</option>
+                <option>경상대학</option>
               </select>
+            </div>
+
+            {/* <div className="department-selection"> */}
+            <div className="form-group">
+              <label className="form-label">학과</label>
+              <button
+                className="select-department-button"
+                onClick={openDepartmentModal} // 학과 모달 열기
+              >
+                {department}
+              </button>
             </div>
           </div>
 
-          {/* 학점선택택 모달 */}
+          {/* 학과 선택 모달 */}
+          <Modal
+            isOpen={isDepartmentModalOpen}
+            onRequestClose={closeDepartmentModal}
+            contentLabel="학과 선택"
+            className="main-modal"
+          >
+            <h2>학과 선택</h2>
+            <div className="modals-buttons">
+              {departments[college].map((dept) => (
+                <button
+                  key={dept}
+                  className="modals-button"
+                  onClick={() => handleDepartmentChange(dept)}
+                >
+                  {dept}
+                </button>
+              ))}
+            </div>
+            <button className="modal-button" onClick={closeDepartmentModal}>
+              닫기
+            </button>
+          </Modal>
+
+          {/* 학점선택 모달 */}
           <div className="credit-group">
             <label className="form-label">학점 선택</label>
             <button className="creditselect-button" onClick={openModal}>
@@ -149,13 +206,13 @@ function Main() {
             <h2>학점 선택</h2>
 
             {/* 전공 학점 선택 */}
-            <div className="credit-section">
+            <div className="modals-section">
               <label>전공학점</label>
-              <div className="credit-buttons">
+              <div className="modals-buttons">
                 {[0, 3, 6, 9, 12, 15, 18].map((credit) => (
                   <button
                     key={credit}
-                    className={`credit-button ${
+                    className={`modals-button ${
                       majorrequired === credit ? "selected" : ""
                     }`}
                     onClick={() => handleMajorrequiredChange(credit)}
@@ -167,13 +224,13 @@ function Main() {
             </div>
 
             {/* 교양 학점 선택 */}
-            <div className="credit-section">
+            <div className="modals-section">
               <label>교양학점</label>
-              <div className="credit-buttons">
+              <div className="modals-buttons">
                 {[0, 3, 6, 9, 12, 15, 18].map((credit) => (
                   <button
                     key={credit}
-                    className={`credit-button ${
+                    className={`modals-button ${
                       generalCredit === credit ? "selected" : ""
                     }`}
                     onClick={() => handleGeneralCreditChange(credit)}
@@ -185,13 +242,13 @@ function Main() {
             </div>
 
             {/* 원격 학점 선택 */}
-            <div className="credit-section">
+            <div className="modals-section">
               <label>원격학점</label>
-              <div className="credit-buttons">
+              <div className="modals-buttons">
                 {[0, 3, 6].map((credit) => (
                   <button
                     key={credit}
-                    className={`credit-button ${
+                    className={`modals-button ${
                       cyberCredit === credit ? "selected" : ""
                     }`}
                     onClick={() => handleCyberCreditChange(credit)}
