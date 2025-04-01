@@ -1,49 +1,61 @@
-/* ===== 기본 스타일 초기화 ===== */
+/* ===== 기본 초기화 ===== */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ===== 메인 컨텐츠 스타일 ===== */
+/* ===== 시간표 전체 컨텐츠 ===== */
 .timetable-content {
   flex: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  height: calc(100vh - 100px);
-  padding: 1.5rem 0.5rem 0;
+  height: auto;
+  padding: 5rem 0.5rem 2rem; /* 기본 여백 (위-좌우-아래) */
 }
 
-/* ===== 시간표 컨테이너 그룹 ===== */
-.tables-wrapper {
-  display: grid;
-  grid-template-columns: repeat(3, auto);
-  gap: 1.2rem;
-  width: 98%;
-  max-width: 2000px;
-  margin: 1.5rem auto 0;
-  justify-content: center;
+/* ===== 체크 페이지에만 적용되는 중앙 정렬 및 여백 조정 ===== */
+.timetable-content.centered {
   align-items: center;
-  padding: 0 1.5rem;
-  overflow: visible !important; /* ✅ 강의 블록이 숨겨지지 않도록 설정 */
+  padding-top: 0rem; /* 조금 더 아래로 내림 */
 }
 
-/* ===== 개별 시간표 컨테이너 ===== */
+/* 가운데 정렬 시 내부 tables-wrapper도 가운데로 */
+.timetable-content.centered .tables-wrapper {
+  width: fit-content;
+  max-width: none;
+}
+
+/* ===== 시간표 그룹 래퍼 ===== */
+.tables-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 1500px;
+  margin: 1.5rem auto 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* ===== 개별 시간표 박스 ===== */
 .timetable-container {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
-  max-width: 420px;
+  width: 480px;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: visible !important; /* ✅ 강의 블록이 잘리거나 숨겨지지 않게 설정 */
+  overflow: visible;
 }
 
-/* ===== 시간표 스타일 ===== */
+/* ===== 시간표 내부 그리드 ===== */
 .timetable {
   display: grid;
   grid-template-columns: 35px repeat(5, 65px);
@@ -51,11 +63,11 @@
   gap: 1px;
   margin: 0 auto;
   position: relative;
-  z-index: 2; /* ✅ 강의 블록이 그리드보다 위로 올라오도록 설정 */
+  z-index: 2;
 }
 
-/* ===== 요일 & 시간 스타일 ===== */
-.timetable-day, .timetable-time {
+.timetable-day,
+.timetable-time {
   padding: 4px 0;
   font-size: 11px;
   text-align: center;
@@ -65,7 +77,6 @@
 .timetable-day {
   border-bottom: 1px solid #ddd;
 }
-
 .timetable-time {
   text-align: right;
   padding-right: 4px;
@@ -74,17 +85,15 @@
   border-right: 1px solid #ddd;
 }
 
-/* ===== 시간표 기본 셀 ===== */
 .timetable-cell {
   background-color: white;
   border: 0.5px solid #ddd;
   height: 40px;
 }
 
-/* ===== 강의 블록 스타일 ===== */
 .lecture-block {
   position: absolute;
-  z-index: 10; /* ✅ 강의 블록이 항상 위에 나타나도록 설정 */
+  z-index: 10;
   background: linear-gradient(135deg, #4A6FA5 0%, #6B8CC7 100%);
   color: white;
   padding: 6.5px;
@@ -100,7 +109,6 @@
   top: 0;
 }
 
-/* ✅ 삭제 버튼 스타일 (기본적으로 숨김, 마우스 오버 시 표시) */
 .lecture-block .delete-btn {
   opacity: 0;
   visibility: hidden;
@@ -114,20 +122,17 @@
   width: auto;
   min-width: 28px;
   height: 18px;
-  text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out, background-color 0.2s, transform 0.1s;
+  transition: opacity 0.2s, visibility 0.2s, background-color 0.2s, transform 0.1s;
 }
 
-/* ✅ 마우스를 올렸을 때 삭제 버튼 표시 */
 .lecture-block:hover .delete-btn {
   opacity: 1;
   visibility: visible;
 }
 
-/* ✅ 교수 선택 드롭다운 스타일 */
 .lecture-select {
   padding: 4px;
   font-size: 12px;
@@ -143,13 +148,11 @@
 .lecture-select:hover {
   border-color: #666;
 }
-
 .lecture-select:focus {
   outline: none;
   border-color: #4A6FA5;
 }
 
-/* ===== 버튼 스타일 (컨테이너 역할 포함) ===== */
 .timetable-button {
   display: flex;
   justify-content: center;
@@ -175,42 +178,4 @@
 .timetable-button:hover {
   background-color: rgba(68, 94, 180, 1);
   transform: scale(1.03);
-}
-
-/* ===== 반응형 디자인 ===== */
-@media (max-width: 1400px) {
-  .tables-wrapper {
-      grid-template-columns: repeat(2, minmax(400px, 1fr));
-  }
-}
-
-@media (max-width: 900px) {
-  .tables-wrapper {
-      grid-template-columns: minmax(400px, 1fr);
-  }
-  .timetable-nav, .timetable-content {
-      padding: 0 1rem;
-  }
-}
-
-@media (max-width: 600px) {
-  .tables-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-  }
-  .timetable-container {
-      width: 100%;
-      max-width: 100%;
-      padding: 1rem;
-  }
-
-  /* 모바일 버튼 조정 */
-  .timetable-button {
-      flex-direction: column;
-      align-items: center;
-      width: 90%;
-      height: 48px;
-      margin-top: 20px;
-  }
 }
