@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import "./timetable.css";
+import "./Timetable.css";
 import Layout from "../Layout/Layout";
 
 import { useNavigate } from "react-router-dom";
