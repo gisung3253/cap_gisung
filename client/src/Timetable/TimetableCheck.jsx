@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import TimetableGrid from './TimetableGrid';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+
 import './timetable.css';
 import Layout from '../Layout/Layout';
+
 
 const TimetableCheck = () => {
     const location = useLocation();

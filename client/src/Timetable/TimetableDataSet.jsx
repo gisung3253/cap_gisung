@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+
 import "./timetable.css";
 import Layout from "../Layout/Layout";
+
 import { useNavigate } from "react-router-dom";
 import TimetableGrid from "./TimetableGrid";
 
