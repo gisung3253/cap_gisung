@@ -27,7 +27,7 @@ select {
 .header-container {
   max-width: 1200px;
   height: 100%;
-  padding: 0 2rem;
+  padding: 0;
   display: flex;
   justify-content: space-between;
   padding-bottom: 1rem;
@@ -38,7 +38,6 @@ select {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding-bottom: 0.5rem;
   border: 1px solid transparent;
 }
 
@@ -166,14 +165,14 @@ select {
   background-color: #004098;
 }
 /* 드롭다운 그리드 */
-.dropdown-grid {
+.main-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
-.dropdown-grid-2 {
+.main-grid-2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
@@ -312,7 +311,7 @@ select {
 }
 
 .modals-button:hover {
-  background: #e60000;
+  background: #9b8f8f;
 }
 
 .total-credit {

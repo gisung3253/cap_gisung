@@ -6,7 +6,7 @@
 
   color-scheme: light dark;
   color: #3f51b5;
-  background-color: #3f51b5;
+  background-color: #f9fafb;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -43,8 +43,8 @@ h1 {
 
 
 @font-face {
-  font-family: "Moneygraphy-Rounded";
-  src: url(./font/Moneygraphy-Rounded.ttf) format("truetype");
+  font-family: "NotoSansKR-VariableFont_wght";
+  src: url(./font/NotoSansKR-VariableFont_wght.ttf) format("truetype");
 }
 
 @media (prefers-color-scheme: light) {
