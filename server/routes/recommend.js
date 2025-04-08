@@ -27,6 +27,8 @@ router.post('/recommend', async (req, res) => {
 
         // 타임테이블 생성
         const timetables = generateTimetables(majorCredits, electiveCredits, majorCodes, electiveCodes);
+            // 교양,전공 학점이랑, 추천받은 과목들의 코드를 타임테이블생성기에게 전달
+
 
         // 생성된 타임테이블 출력
         console.log("==== 생성된 시간표 ====");
@@ -80,6 +82,22 @@ router.get('/timetables', (req, res) => {
     }
 });
 
+// // 과목코드들 테스트용 코드
+//     const mjcode = [ '32822-02', '42446-01', '37013-01', '34412-01', '34412-02' ];
+//     const etcode = ['44650-01', '38623-01','32877-01', '44664-01','40034-01', '42826-01','32905-51', '21995-01','21996-01', '42276-01'];
+
+//     console.log("==== 추천받은 과목 코드 ====");
+//     console.log("전공 과목 코드:", mjcode);
+//     console.log("교양 과목 코드:", etcode);
+
+//     const timetables = generateTimetables(6, 6, mjcode, etcode);
+//     // 생성된 타임테이블 출력
+//     console.log("==== 생성된 시간표 ====");
+//     if (timetables.length > 0) {
+//         console.log(JSON.stringify(formatTimetables(timetables), null, 4));
+//     } else {
+//         console.error("조건에 맞는 시간표가 없습니다.");
+//     }
 
 
 module.exports = router;
