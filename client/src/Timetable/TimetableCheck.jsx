@@ -4,7 +4,7 @@ import TimetableGrid from './TimetableGrid';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
-import './timetable.css';
+import './Timetable.css';
 import Layout from '../Layout/Layout';
 
 
